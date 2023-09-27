@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_1/models/data/dummy_model.dart';
+import 'package:intl/intl.dart';
 
 class MyForm2 extends StatefulWidget {
   const MyForm2({super.key});
@@ -31,8 +32,9 @@ class _MyForm2State extends State<MyForm2> {
     // Add more MyModel instances as needed
   ];
 
-  TextEditingController _searchController = TextEditingController();
-  List<TestCase> _filteredModels = [];
+  // final f = new DateFormat('yyyy-MM-dd hh:mm');
+  final TextEditingController _searchController = TextEditingController();
+  final List<TestCase> _filteredModels = [];
 
   @override
   void initState() {
@@ -43,11 +45,13 @@ class _MyForm2State extends State<MyForm2> {
   void _filterSearchResults(String query) {
     List<TestCase> filteredList = [];
     if (query.isNotEmpty) {
-      myTestCase.forEach((model) {
-        if (model.name.toLowerCase().contains(query.toLowerCase())) {
+      for (int i = 0; i < myTestCase.length; i++) {
+        TestCase model = myTestCase[i];
+        if (model.name.toLowerCase().contains(query.toLowerCase()) ||
+            model.description.toLowerCase().contains(query.toLowerCase())) {
           filteredList.add(model);
         }
-      });
+      }
     } else {
       filteredList.addAll(myTestCase);
     }
@@ -55,6 +59,12 @@ class _MyForm2State extends State<MyForm2> {
       _filteredModels.clear();
       _filteredModels.addAll(filteredList);
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -84,9 +94,9 @@ class _MyForm2State extends State<MyForm2> {
             Expanded(
               child: DataTable(
                 columns: const [
-                  DataColumn(
-                    label: Text('Select'),
-                  ),
+                  // DataColumn(
+                  //   label: Text('Select'),
+                  // ),
                   DataColumn(
                     label: Text('ID'),
                   ),
@@ -110,16 +120,16 @@ class _MyForm2State extends State<MyForm2> {
                           });
                         },
                         cells: [
-                          DataCell(
-                            Checkbox(
-                              value: model.isSelected,
-                              onChanged: (isSelected) {
-                                setState(() {
-                                  model.isSelected = isSelected!;
-                                });
-                              },
-                            ),
-                          ),
+                          // DataCell(
+                          //   Checkbox(
+                          //     value: model.isSelected,
+                          //     onChanged: (isSelected) {
+                          //       setState(() {
+                          //         model.isSelected = isSelected!;
+                          //       });
+                          //     },
+                          //   ),
+                          // ),
                           DataCell(
                             Text('${model.id}'),
                           ),
@@ -127,7 +137,8 @@ class _MyForm2State extends State<MyForm2> {
                             Text('${model.name}'),
                           ),
                           DataCell(
-                            Text('${model.date.toLocal()}'),
+                            Text(DateFormat('MMM - dd - yyyy, hh:mm')
+                                .format(model.date)),
                           ),
                           DataCell(
                             Text('${model.description}'),
