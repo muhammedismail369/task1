@@ -134,14 +134,14 @@ class _MyForm2State extends State<MyForm2> {
                             Text('${model.id}'),
                           ),
                           DataCell(
-                            Text('${model.name}'),
+                            Text(model.name),
                           ),
                           DataCell(
                             Text(DateFormat('MMM - dd - yyyy, hh:mm')
                                 .format(model.date)),
                           ),
                           DataCell(
-                            Text('${model.description}'),
+                            Text(model.description),
                           ),
                         ],
                       ),

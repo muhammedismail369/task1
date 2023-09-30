@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-final f = new DateFormat('yyyy-MM-dd hh:mm');
+final f = DateFormat('yyyy-MM-dd hh:mm');
 
 class TestCase {
   final int id;
